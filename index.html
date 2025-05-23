@@ -4,144 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ваш Эковаучер</title>
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
     html, body {
       margin: 0;
       padding: 0;
+      overflow: hidden;
       font-family: Arial, sans-serif;
       background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
-      background-size: 100% 600px;
-      background-repeat: no-repeat;
+      background-size: 100% 100%;
       color: #3e2a14;
-      overflow: hidden;
-      height: 100vh;
     }
+
     header, footer {
-      width: 100%;
       text-align: center;
       padding: 10px;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.0);
       font-family: 'UnifrakturCook', serif;
-      color: #ecd577;
-      text-shadow: 1px 1px 2px rgba(62, 42, 20, 0.7);
-      position: fixed;
-      left: 0;
-      right: 0;
-      z-index: 1000;
+      font-size: 24px;
+      color: #f0d88c;
+      text-shadow: 1px 1px 2px rgba(60, 30, 0, 0.7);
     }
-    header {
-      top: 0;
-    }
-    footer {
-      bottom: 0;
-    }
+
     main {
-      max-width: 600px;
-      margin: 80px auto 60px;
       padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
     }
-    h1 {
-      font-size: 2em;
-    }
-    .box {
-      background: rgba(236, 207, 119, 0.85);
+
+    .info-box {
+      background: rgba(255, 236, 179, 0.8);
       border: 2px solid #3e2a14;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 40px;
+      text-align: center;
+      color: #3e2a14;
     }
-    .hidden {
-      display: none;
-    }
-    .button, .chat-button {
-      display: block;
-      margin: 10px auto;
-      background-color: #3e2a14;
-      color: #ecd577;
-      border: 2px solid #ecd577;
-      padding: 10px 20px;
-      border-radius: 5px;
+
+    .info-box p {
+      margin: 10px 0;
       font-weight: bold;
+    }
+
+    .button {
+      background-color: #5a3b1a;
+      color: #f0d88c;
+      border: 2px solid #f0d88c;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      margin: 20px auto;
+      display: block;
       cursor: pointer;
     }
-    .message-client {
-      background-color: #3e2a14;
-      color: #ecd577;
-      border: 1px solid #ecd577;
-      padding: 5px 10px;
-      margin: 5px;
-      border-radius: 10px;
-      text-align: right;
+
+    .form-container {
+      text-align: center;
     }
-    .message-manager {
-      background-color: #ecd577;
+
+    .form-container select,
+    .form-container textarea {
+      width: 80%;
+      max-width: 400px;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #5a3b1a;
+      border-radius: 8px;
+      background: rgba(255, 236, 179, 0.8);
       color: #3e2a14;
-      border: 1px solid #3e2a14;
-      padding: 5px 10px;
-      margin: 5px;
-      border-radius: 10px;
-      text-align: left;
+    }
+
+    .form-container textarea {
+      resize: none;
+    }
+
+    .form-container label {
+      color: #3e2a14;
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Ваш Эковаучер с запросом на услугу банкротство</h1>
+    Ваш Эковаучер с запросом на услугу банкротства
   </header>
 
   <main>
-    <div id="clientInfo" class="box">
-      <p><strong>Информация о клиенте</strong></p>
-      <p>Паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR-коде Эковаучера.</p>
-      <p>Ваши электронные данные защищены в соответствии с законодательством РФ. Убедительная просьба не передавать Эковаучер третьим лицам.</p>
+    <div id="infoBox" class="info-box">
+      <p>Информация о клиенте:</p>
+      <p>Паспортные данные, контакты и электронная подпись зашифрованы в QR-коде Эковаучера.</p>
+      <p>Ваши электронные данные защищены в соответствии с законодательством РФ.</p>
+      <p>Убедительная просьба: не передавайте Эковаучер третьим лицам.</p>
     </div>
 
-    <button class="button" onclick="showForm()">Создать заявку</button>
+    <button id="createButton" class="button" onclick="showForm()">Создать заявку</button>
 
-    <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
-      <label>Тип процедуры банкротства:</label><br />
+    <form id="formBox" class="box hidden form-container" onsubmit="submitForm(event)">
+      <label>Тип процедуры банкротства:</label>
       <select required>
         <option>Физическое лицо</option>
         <option>ИП</option>
         <option>Юридическое лицо</option>
-      </select><br /><br />
+      </select>
 
-      <label>Ваше имя:</label><br />
-      <input type="text" required /><br /><br />
+      <label>Выберите арбитражного управляющего:</label>
+      <select required>
+        <option>Иванов Алексей Сергеевич</option>
+        <option>Петрова Мария Викторовна</option>
+        <option>Смирнов Дмитрий Алексеевич</option>
+      </select>
 
-      <label>Email:</label><br />
-      <input type="email" required /><br /><br />
-
-      <label>Телефон:</label><br />
-      <input type="tel" required /><br /><br />
+      <label>Изложите кратко ситуацию:</label>
+      <textarea rows="4" placeholder="Ваше сообщение..."></textarea>
 
       <button type="submit" class="button">Отправить заявку</button>
     </form>
 
-    <div id="waitingMessage" class="box hidden">
+    <div id="waitingBox" class="info-box hidden">
       <p>Ожидайте отклика Арбитражного управляющего...</p>
     </div>
 
-    <div id="managerInfo" class="box hidden">
-      <p><strong>Ваша заявка принята.</strong><br /><br />
-        Заявка передана арбитражному управляющему.<br /><br />
-        <strong>Ваш арбитражный управляющий:</strong><br />
-        Иванов Алексей Сергеевич<br />
-        Телефон: +7 (999) 123-45-67<br />
-        Email: a.ivanov@bankrotserv.ru
-      </p>
-      <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
-    </div>
-
-    <div id="chatBox" class="box hidden">
-      <div id="chatMessages" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
-      <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%;" />
-      <button onclick="sendMessage()" class="chat-button">Отправить</button>
+    <div id="acceptedBox" class="info-box hidden">
+      <p>Заявка принята!</p>
+      <p>Ваш арбитражный управляющий: Иванов Алексей Сергеевич</p>
+      <button class="button">Начать обсуждение</button>
     </div>
   </main>
 
@@ -151,50 +145,20 @@
 
   <script>
     function showForm() {
-      document.getElementById('clientInfo').classList.add('hidden');
-      document.querySelector('button.button').classList.add('hidden');
+      document.getElementById('infoBox').classList.add('hidden');
       document.getElementById('formBox').classList.remove('hidden');
+      document.getElementById('createButton').classList.add('hidden');
     }
 
-    function submitForm(event) {
-      event.preventDefault();
+    function submitForm(e) {
+      e.preventDefault();
       document.getElementById('formBox').classList.add('hidden');
-      document.getElementById('waitingMessage').classList.remove('hidden');
-
+      document.getElementById('waitingBox').classList.remove('hidden');
       setTimeout(() => {
-        document.getElementById('waitingMessage').classList.add('hidden');
-        document.getElementById('managerInfo').classList.remove('hidden');
+        document.getElementById('waitingBox').classList.add('hidden');
+        document.getElementById('acceptedBox').classList.remove('hidden');
       }, 3000);
     }
-
-    function startDiscussion() {
-      document.getElementById('managerInfo').classList.add('hidden');
-      document.getElementById('chatBox').classList.remove('hidden');
-    }
-
-    function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-
-      const chat = document.getElementById('chatMessages');
-
-      const clientMsg = document.createElement('div');
-      clientMsg.className = 'message-client';
-      clientMsg.textContent = msg;
-      chat.appendChild(clientMsg);
-
-      input.value = '';
-
-      setTimeout(() => {
-        const reply = document.createElement('div');
-        reply.className = 'message-manager';
-        reply.textContent = 'Уточните, пожалуйста, какие у вас вопросы?';
-        chat.appendChild(reply);
-        chat.scrollTop = chat.scrollHeight;
-      }, 2000);
-    }
   </script>
-
 </body>
 </html>
