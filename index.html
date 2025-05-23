@@ -4,32 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ваш Эковаучер</title>
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
     }
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background-size: 100% 600px;
+      background-repeat: no-repeat;
       color: #3e2a14;
-      text-shadow: 1px 1px 1px rgba(62, 42, 20, 0.4);
+      overflow: hidden;
+      height: 100vh;
     }
     header, footer {
       width: 100%;
       text-align: center;
       padding: 10px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.3);
       font-family: 'UnifrakturCook', serif;
       color: #ecd577;
       text-shadow: 1px 1px 2px rgba(62, 42, 20, 0.7);
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    header {
+      top: 0;
+    }
+    footer {
+      bottom: 0;
     }
     main {
       max-width: 600px;
-      margin: 30px auto;
+      margin: 80px auto 60px;
       padding: 20px;
     }
     h1 {
@@ -92,21 +104,21 @@
     <button class="button" onclick="showForm()">Создать заявку</button>
 
     <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
-      <label>Тип процедуры банкротства:</label><br>
+      <label>Тип процедуры банкротства:</label><br />
       <select required>
         <option>Физическое лицо</option>
         <option>ИП</option>
         <option>Юридическое лицо</option>
-      </select><br><br>
+      </select><br /><br />
 
-      <label>Ваше имя:</label><br>
-      <input type="text" required><br><br>
+      <label>Ваше имя:</label><br />
+      <input type="text" required /><br /><br />
 
-      <label>Email:</label><br>
-      <input type="email" required><br><br>
+      <label>Email:</label><br />
+      <input type="email" required /><br /><br />
 
-      <label>Телефон:</label><br>
-      <input type="tel" required><br><br>
+      <label>Телефон:</label><br />
+      <input type="tel" required /><br /><br />
 
       <button type="submit" class="button">Отправить заявку</button>
     </form>
@@ -116,11 +128,11 @@
     </div>
 
     <div id="managerInfo" class="box hidden">
-      <p><strong>Ваша заявка принята.</strong><br><br>
-        Заявка передана арбитражному управляющему.<br><br>
-        <strong>Ваш арбитражный управляющий:</strong><br>
-        Иванов Алексей Сергеевич<br>
-        Телефон: +7 (999) 123-45-67<br>
+      <p><strong>Ваша заявка принята.</strong><br /><br />
+        Заявка передана арбитражному управляющему.<br /><br />
+        <strong>Ваш арбитражный управляющий:</strong><br />
+        Иванов Алексей Сергеевич<br />
+        Телефон: +7 (999) 123-45-67<br />
         Email: a.ivanov@bankrotserv.ru
       </p>
       <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
@@ -140,6 +152,7 @@
   <script>
     function showForm() {
       document.getElementById('clientInfo').classList.add('hidden');
+      document.querySelector('button.button').classList.add('hidden');
       document.getElementById('formBox').classList.remove('hidden');
     }
 
@@ -155,6 +168,7 @@
     }
 
     function startDiscussion() {
+      document.getElementById('managerInfo').classList.add('hidden');
       document.getElementById('chatBox').classList.remove('hidden');
     }
 
