@@ -35,14 +35,13 @@
       z-index: -1;
     }
 
-    header, footer {
+    header, footer, h1 {
       text-align: center;
       padding: 5px;
-      background: transparent;
       font-weight: bold;
       font-family: 'UnifrakturCook', serif;
-      color: #3e2a14;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+      color: #d8c27a;
+      text-shadow: 1px 1px 2px rgba(62, 42, 20, 0.6);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
@@ -55,18 +54,16 @@
       background: rgba(255, 255, 255, 0.85);
       border-radius: 10px;
       flex: 1;
-    }
-
-    h1 {
-      font-family: 'UnifrakturCook', serif;
-      color: #3e2a14;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
     }
 
     form {
-      display: flex;
+      display: none;
       flex-direction: column;
+      width: 100%;
     }
 
     label {
@@ -80,10 +77,12 @@
       border: 1px solid #ccc;
       margin-bottom: 15px;
       font-family: Arial, sans-serif;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button {
-      padding: 10px;
+      padding: 12px 25px;
       border: none;
       border-radius: 5px;
       background-color: #6c8f3b;
@@ -92,10 +91,115 @@
       cursor: pointer;
       transition: background 0.3s;
       font-family: Arial, sans-serif;
+      font-size: 18px;
+      min-width: 180px;
+      align-self: center;
+      margin-top: 10px;
     }
 
     button:hover {
       background-color: #58762f;
+    }
+
+    #openFormBtn {
+      display: inline-block;
+      margin: 20px auto 0;
+      cursor: pointer;
+    }
+
+    #thankYouMsg {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #3e2a14;
+      text-align: center;
+    }
+
+    /* Обсуждение - чат */
+    #discussionContainer {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      background: rgba(255 255 255 / 0.95);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin-top: 20px;
+      padding: 10px;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      background-color: #fafafa;
+    }
+
+    #messages div {
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+
+    .clientMsg {
+      background-color: #d8c27a;
+      align-self: flex-start;
+      color: #3e2a14;
+    }
+
+    .managerMsg {
+      background-color: #6c8f3b;
+      align-self: flex-end;
+      color: white;
+    }
+
+    #messageInput {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: calc(100% - 90px);
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    #sendMsgBtn {
+      width: 70px;
+      margin-left: 10px;
+      background-color: #6c8f3b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    #sendMsgBtn:hover {
+      background-color: #58762f;
+    }
+
+    #startDiscussionBtn {
+      margin-top: 15px;
+      background-color: #d8c27a;
+      color: #3e2a14;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 12px 25px;
+      font-size: 18px;
+      min-width: 200px;
+    }
+    #startDiscussionBtn:hover {
+      background-color: #c2b061;
     }
   </style>
 </head>
@@ -107,13 +211,15 @@
   <main>
     <p><strong>Информация о клиенте:</strong> Паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR-коде Эковаучера.</p>
 
-    <form>
+    <button id="openFormBtn" type="button">Создать заявку</button>
+
+    <form id="bankruptcyForm">
       <label for="procedure">Тип процедуры банкротства:</label>
       <select id="procedure" name="procedure" required>
         <option value="">-- Выберите --</option>
         <option value="физическое">Физическое лицо</option>
-        <option value="юридическое">Юридическое лицо</option>
         <option value="ип">ИП</option>
+        <option value="юридическое">Юридическое лицо</option>
       </select>
 
       <label for="manager">Арбитражный управляющий:</label>
@@ -129,10 +235,89 @@
 
       <button type="submit">Отправить заявку</button>
     </form>
+
+    <div id="thankYouMsg">
+      Ожидайте отклика Арбитражного управляющего.
+      <button id="startDiscussionBtn" type="button">Начать обсуждение</button>
+    </div>
+
+    <div id="discussionContainer">
+      <div id="messages"></div>
+      <div style="display:flex;">
+        <input type="text" id="messageInput" placeholder="Введите сообщение..." />
+        <button id="sendMsgBtn" type="button">Отправить</button>
+      </div>
+    </div>
   </main>
 
   <footer>
     &copy; 2025 Купчая КрепостЪ
   </footer>
+
+  <script>
+    const openFormBtn = document.getElementById('openFormBtn');
+    const form = document.getElementById('bankruptcyForm');
+    const thankYouMsg = document.getElementById('thankYouMsg');
+    const startDiscussionBtn = document.getElementById('startDiscussionBtn');
+    const discussionContainer = document.getElementById('discussionContainer');
+    const messagesDiv = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    const sendMsgBtn = document.getElementById('sendMsgBtn');
+
+    openFormBtn.addEventListener('click', () => {
+      form.style.display = 'flex';
+      openFormBtn.style.display = 'none';
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.style.display = 'none';
+      thankYouMsg.style.display = 'block';
+    });
+
+    startDiscussionBtn.addEventListener('click', () => {
+      discussionContainer.style.display = 'flex';
+      thankYouMsg.style.display = 'none';
+      messageInput.focus();
+      addMessage('Система', 'Обсуждение начато. Задавайте вопросы и уточняйте нюансы.');
+    });
+
+    sendMsgBtn.addEventListener('click', () => {
+      sendMessage();
+    });
+
+    messageInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.textContent = text;
+      if (sender === 'Клиент') {
+        msgDiv.classList.add('clientMsg');
+        msgDiv.style.alignSelf = 'flex-start';
+      } else if (sender === 'Арбитражный управляющий' || sender === 'Система') {
+        msgDiv.classList.add('managerMsg');
+        msgDiv.style.alignSelf = 'flex-end';
+      }
+      messagesDiv.appendChild(msgDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+      addMessage('Клиент', text);
+      messageInput.value = '';
+
+      // Для имитации ответа управляющего через 1.5 сек
+      setTimeout(() => {
+        addMessage('Арбитражный управляющий', 'Спасибо за ваше сообщение, мы рассмотрим и ответим в ближайшее время.');
+      }, 1500);
+    }
+  </script>
 </body>
 </html>
