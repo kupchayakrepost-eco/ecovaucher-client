@@ -5,29 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ваш Эковаучер</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      position: relative;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
-      background-size: cover;
       color: #3e2a14;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
-    header, footer {
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    header {
       text-align: center;
       padding: 5px;
       background: transparent;
       font-weight: bold;
       font-family: 'UnifrakturCook', serif;
-      color: #ffffff;
-      text-shadow: 1px 1px 2px #000000;
-    }
-
-    header {
-      margin-top: 20px;
+      color: #3e2a14;
+      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
     }
 
     main {
@@ -41,7 +50,8 @@
 
     h1 {
       font-family: 'UnifrakturCook', serif;
-      color: #d8c27a;
+      color: #3e2a14;
+      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
       text-align: center;
     }
 
@@ -55,11 +65,12 @@
       font-weight: bold;
     }
 
-    input, select, textarea {
+    select, textarea {
       padding: 8px;
       border-radius: 5px;
       border: 1px solid #ccc;
       margin-bottom: 15px;
+      font-family: Arial, sans-serif;
     }
 
     button {
@@ -71,10 +82,21 @@
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s;
+      font-family: Arial, sans-serif;
     }
 
     button:hover {
       background-color: #58762f;
+    }
+
+    footer {
+      text-align: center;
+      padding: 5px;
+      background: transparent;
+      font-weight: bold;
+      font-family: 'UnifrakturCook', serif;
+      color: #3e2a14;
+      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
     }
   </style>
 </head>
@@ -84,7 +106,7 @@
   </header>
 
   <main>
-    <p><strong>Ваш Эковаучер подтверждён.</strong> Все необходимые данные (паспортные, контактные, электронная подпись) уже зашифрованы и переданы через QR-код.</p>
+    <p><strong>Информация о клиенте:</strong> Паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR-коде Эковаучера.</p>
 
     <form>
       <label for="procedure">Тип процедуры банкротства:</label>
@@ -92,6 +114,7 @@
         <option value="">-- Выберите --</option>
         <option value="физическое">Физическое лицо</option>
         <option value="юридическое">Юридическое лицо</option>
+        <option value="ип">ИП</option>
       </select>
 
       <label for="manager">Арбитражный управляющий:</label>
