@@ -7,6 +7,12 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
     body {
       margin: 0;
       position: relative;
@@ -15,6 +21,7 @@
       color: #3e2a14;
       display: flex;
       flex-direction: column;
+      filter: contrast(110%);
     }
 
     body::before {
@@ -24,7 +31,7 @@
       background-image: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg');
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: 100% 100%; /* Растягиваем по ширине и высоте */
+      background-size: 100% 100%;
       z-index: -1;
     }
 
@@ -35,7 +42,7 @@
       font-weight: bold;
       font-family: 'UnifrakturCook', serif;
       color: #3e2a14;
-      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
+      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
     }
 
     main {
@@ -50,7 +57,7 @@
     h1 {
       font-family: 'UnifrakturCook', serif;
       color: #3e2a14;
-      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
+      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
       text-align: center;
     }
 
@@ -95,7 +102,7 @@
       font-weight: bold;
       font-family: 'UnifrakturCook', serif;
       color: #3e2a14;
-      text-shadow: 1px 1px 3px rgba(216, 194, 122, 0.5);
+      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
     }
   </style>
 </head>
