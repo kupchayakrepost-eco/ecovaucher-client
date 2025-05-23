@@ -35,14 +35,17 @@
       z-index: -1;
     }
 
-    header {
+    header, footer {
       text-align: center;
       padding: 5px;
       background: transparent;
       font-weight: bold;
       font-family: 'UnifrakturCook', serif;
       color: #3e2a14;
-      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     main {
@@ -57,7 +60,7 @@
     h1 {
       font-family: 'UnifrakturCook', serif;
       color: #3e2a14;
-      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
       text-align: center;
     }
 
@@ -93,16 +96,6 @@
 
     button:hover {
       background-color: #58762f;
-    }
-
-    footer {
-      text-align: center;
-      padding: 5px;
-      background: transparent;
-      font-weight: bold;
-      font-family: 'UnifrakturCook', serif;
-      color: #3e2a14;
-      text-shadow: 2px 2px 4px rgba(216, 194, 122, 0.6);
     }
   </style>
 </head>
