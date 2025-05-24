@@ -41,10 +41,12 @@
     }
     main {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: calc(100vh - 120px);
+      justify-content: center;
+      height: calc(100vh - 100px); /* учитываем высоту header + footer */
       padding: 20px;
+      position: relative;
     }
     h1 {
       font-size: 2em;
@@ -57,6 +59,7 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
+      box-sizing: border-box;
     }
     .hidden {
       display: none;
@@ -74,10 +77,8 @@
       z-index: 1001;
     }
     .button {
-      position: fixed;
-      bottom: 60px;
-      left: 50%;
-      transform: translateX(-50%);
+      position: static;
+      margin-top: 20px;
     }
     .chat-button {
       display: block;
@@ -101,6 +102,9 @@
       border-radius: 10px;
       text-align: left;
     }
+    form.box {
+      margin: 0; /* убрать внешние отступы, чтобы центрировать ровно */
+    }
   </style>
 </head>
 <body>
@@ -116,30 +120,30 @@
       <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 ГК РФ и пункт 3 статьи 10 Федерального закона №152-ФЗ).</p>
       <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
     </div>
+
+    <button id="createRequestBtn" class="button" onclick="showForm()">Создать заявку</button>
+
+    <form id="formBox" class="box hidden" onsubmit="submitForm(event)" >
+      <label>Тип процедуры банкротства:</label><br />
+      <select required>
+        <option>Физическое лицо</option>
+        <option>ИП</option>
+        <option>Юридическое лицо</option>
+      </select><br /><br />
+
+      <label>Выберите Арбитражного управляющего:</label><br />
+      <select required>
+        <option value="" disabled selected>Выберите управляющего</option>
+        <option>Иванов Алексей Сергеевич</option>
+        <option>Петрова Марина Ивановна</option>
+      </select><br /><br />
+
+      <label>Изложите кратко:</label><br />
+      <textarea rows="4" required style="width: 100%;"></textarea><br /><br />
+
+      <button type="submit" class="button" style="position: static; transform: none; margin: 0 auto; display: block;">Отправить заявку</button>
+    </form>
   </main>
-
-  <button id="createRequestBtn" class="button" onclick="showForm()">Создать заявку</button>
-
-  <form id="formBox" class="box hidden" onsubmit="submitForm(event)" style="max-width: 600px; margin: 80px auto 60px; padding: 20px;">
-    <label>Тип процедуры банкротства:</label><br />
-    <select required>
-      <option>Физическое лицо</option>
-      <option>ИП</option>
-      <option>Юридическое лицо</option>
-    </select><br /><br />
-
-    <label>Выберите Арбитражного управляющего:</label><br />
-    <select required>
-      <option value="" disabled selected>Выберите управляющего</option>
-      <option>Иванов Алексей Сергеевич</option>
-      <option>Петрова Марина Ивановна</option>
-    </select><br /><br />
-
-    <label>Изложите кратко:</label><br />
-    <textarea rows="4" required style="width: 100%;"></textarea><br /><br />
-
-    <button type="submit" class="button" style="position: static; transform: none; margin: 0 auto; display: block;">Отправить заявку</button>
-  </form>
 
   <div id="waitingMessage" class="box hidden" style="max-width: 600px; margin: 80px auto 60px; padding: 20px; text-align: center;">
     <p>Ожидайте отклика Арбитражного управляющего...</p>
