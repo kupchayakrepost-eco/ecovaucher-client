@@ -18,7 +18,7 @@
       background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
       background-size: 100% 100%;
       color: #3e2a14;
-      overflow: hidden;
+      overflow-x: hidden;
     }
     header, footer {
       width: 100%;
@@ -41,14 +41,12 @@
     }
     main {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(100vh - 120px);
-      padding: 20px;
-      flex-direction: column;
-    }
-    h1 {
-      font-size: 2em;
+      height: calc(100vh - 160px);
+      margin-top: 80px;
+      margin-bottom: 80px;
     }
     .box {
       background: rgba(236, 207, 119, 0.85);
@@ -58,7 +56,6 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
-      margin-bottom: 15px;
     }
     .hidden {
       display: none;
@@ -73,20 +70,8 @@
       cursor: pointer;
       min-width: 200px;
       text-align: center;
-      z-index: 1001;
-    }
-    .button {
-      position: fixed;
-      bottom: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .chat-button {
+      margin: 20px auto;
       display: block;
-      margin: 10px auto 0 auto;
-      background-color: #f5deb3; /* какао с молоком */
-      color: #3e2a14;
-      border: 1px solid #a0522d;
     }
     .message-client {
       background-color: #3e2a14;
@@ -106,32 +91,30 @@
       border-radius: 10px;
       text-align: left;
     }
-    #chatBox {
-      max-width: 600px;
-      margin: 80px auto 60px;
-      padding: 20px;
-      background: rgba(236, 207, 119, 0.85);
-      border: 2px solid #3e2a14;
-      border-radius: 8px;
-    }
-    #chatMessages {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-      text-align: left;
+    textarea, select {
+      background-color: #d2b48c; /* какао с молоком */
+      border: 1px solid #3e2a14;
+      padding: 8px;
+      width: 100%;
+      border-radius: 4px;
     }
     #chatInput {
+      background-color: #d2b48c;
+      border: 1px solid #3e2a14;
+      border-radius: 4px;
       width: 100%;
-      resize: vertical;
-      min-height: 60px;
-      font-size: 1em;
+      height: 60px;
       padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #a0522d;
-      font-family: Arial, sans-serif;
-      color: #3e2a14;
-      background-color: #f5deb3; /* какао с молоком */
-      box-sizing: border-box;
+      resize: none;
+    }
+    #chatMessages {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      background-color: rgba(236, 207, 119, 0.4);
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #3e2a14;
     }
   </style>
 </head>
@@ -148,35 +131,36 @@
       <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 ГК РФ и пункт 3 статьи 10 Федерального закона №152-ФЗ).</p>
       <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
     </div>
-    <button id="createRequestBtn" class="button" onclick="showForm()" style="position: static; transform: none; margin-bottom: 30px;">Создать заявку</button>
 
-    <form id="formBox" class="box hidden" onsubmit="submitForm(event)" style="max-width: 600px; margin: 0 auto 30px; padding: 20px;">
-      <h2 style="color: #3e2a14; margin-bottom: 15px;">Форма заявки</h2>
+    <button id="createRequestBtn" class="button" onclick="showForm()">Создать заявку</button>
+
+    <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
+      <h2 style="color: #3e2a14;">Форма заявки</h2>
       <label>Тип процедуры банкротства:</label><br />
-      <select required style="background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 6px; width: 100%;">
+      <select required>
         <option>Физическое лицо</option>
         <option>ИП</option>
         <option>Юридическое лицо</option>
       </select><br /><br />
 
       <label>Выберите Арбитражного управляющего:</label><br />
-      <select required style="background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 6px; width: 100%;">
+      <select required>
         <option value="" disabled selected>Выберите управляющего</option>
         <option>Иванов Алексей Сергеевич</option>
         <option>Петрова Марина Ивановна</option>
       </select><br /><br />
 
       <label>Изложите кратко:</label><br />
-      <textarea rows="4" required style="width: 100%; background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 8px; resize: vertical;"></textarea><br /><br />
-
-      <button type="submit" class="button" style="position: static; transform: none; margin: 0 auto; display: block;">Отправить заявку</button>
+      <textarea rows="4" required></textarea><br />
     </form>
 
-    <div id="waitingMessage" class="box hidden" style="max-width: 600px; margin: 0 auto 30px; padding: 20px; text-align: center;">
+    <button id="submitBtn" class="button hidden" onclick="document.getElementById('formBox').requestSubmit()">Отправить заявку</button>
+
+    <div id="waitingMessage" class="box hidden">
       <p>Ожидайте отклика Арбитражного управляющего...</p>
     </div>
 
-    <div id="managerInfo" class="box hidden" style="max-width: 600px; margin: 0 auto 30px; padding: 20px; text-align: center;">
+    <div id="managerInfo" class="box hidden">
       <p><strong>Ваша заявка принята.</strong><br /><br />
         Заявка передана арбитражному управляющему.<br /><br />
         <strong>Ваш арбитражный управляющий:</strong><br />
@@ -184,13 +168,14 @@
         Телефон: +7 (999) 123-45-67<br />
         Email: a.ivanov@bankrotserv.ru
       </p>
-      <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
     </div>
 
-    <div id="chatBox" class="hidden">
+    <button id="startChat" class="button hidden" onclick="startDiscussion()">Начать обсуждение</button>
+
+    <div id="chatBox" class="box hidden">
       <div id="chatMessages"></div>
-      <textarea id="chatInput" placeholder="Введите сообщение..."></textarea>
-      <button onclick="sendMessage()" class="chat-button">Отправить</button>
+      <textarea id="chatInput" placeholder="Введите сообщение..."></textarea><br />
+      <button onclick="sendMessage()" class="button">Отправить</button>
     </div>
   </main>
 
@@ -203,21 +188,25 @@
       document.getElementById('clientInfo').classList.add('hidden');
       document.getElementById('createRequestBtn').classList.add('hidden');
       document.getElementById('formBox').classList.remove('hidden');
+      document.getElementById('submitBtn').classList.remove('hidden');
     }
 
     function submitForm(event) {
       event.preventDefault();
       document.getElementById('formBox').classList.add('hidden');
+      document.getElementById('submitBtn').classList.add('hidden');
       document.getElementById('waitingMessage').classList.remove('hidden');
 
       setTimeout(() => {
         document.getElementById('waitingMessage').classList.add('hidden');
         document.getElementById('managerInfo').classList.remove('hidden');
+        document.getElementById('startChat').classList.remove('hidden');
       }, 3000);
     }
 
     function startDiscussion() {
       document.getElementById('managerInfo').classList.add('hidden');
+      document.getElementById('startChat').classList.add('hidden');
       document.getElementById('chatBox').classList.remove('hidden');
     }
 
@@ -227,7 +216,6 @@
       if (!msg) return;
 
       const chat = document.getElementById('chatMessages');
-
       const clientMsg = document.createElement('div');
       clientMsg.className = 'message-client';
       clientMsg.textContent = msg;
@@ -251,6 +239,5 @@
       }
     });
   </script>
-
 </body>
 </html>
