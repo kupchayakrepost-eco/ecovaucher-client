@@ -41,12 +41,10 @@
     }
     main {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: calc(100vh - 140px);
+      align-items: center;
+      height: calc(100vh - 120px);
       padding: 20px;
-      gap: 20px;
     }
     h1 {
       font-size: 2em;
@@ -56,16 +54,14 @@
       border: 2px solid #3e2a14;
       border-radius: 8px;
       padding: 15px;
-      margin: 0; /* убираем нижний отступ, теперь gap управляет */
       max-width: 600px;
       width: 100%;
+      text-align: center;
     }
     .hidden {
       display: none;
     }
     .button, .chat-button {
-      display: block;
-      margin: 10px auto 0 auto;
       background-color: #3e2a14;
       color: #ecd577;
       border: 2px solid #ecd577;
@@ -75,6 +71,17 @@
       cursor: pointer;
       min-width: 200px;
       text-align: center;
+      z-index: 1001;
+    }
+    .button {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .chat-button {
+      display: block;
+      margin: 10px auto 0 auto;
     }
     .message-client {
       background-color: #3e2a14;
@@ -109,51 +116,51 @@
       <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 ГК РФ и пункт 3 статьи 10 Федерального закона №152-ФЗ).</p>
       <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
     </div>
-
-    <button class="button" onclick="showForm()">Создать заявку</button>
-
-    <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
-      <label>Тип процедуры банкротства:</label><br />
-      <select required>
-        <option>Физическое лицо</option>
-        <option>ИП</option>
-        <option>Юридическое лицо</option>
-      </select><br /><br />
-
-      <label>Выберите Арбитражного управляющего:</label><br />
-      <select required>
-        <option value="" disabled selected>Выберите управляющего</option>
-        <option>Иванов Алексей Сергеевич</option>
-        <option>Петрова Марина Ивановна</option>
-      </select><br /><br />
-
-      <label>Изложите кратко:</label><br />
-      <textarea rows="4" required style="width: 100%;"></textarea><br /><br />
-
-      <button type="submit" class="button">Отправить заявку</button>
-    </form>
-
-    <div id="waitingMessage" class="box hidden">
-      <p>Ожидайте отклика Арбитражного управляющего...</p>
-    </div>
-
-    <div id="managerInfo" class="box hidden">
-      <p><strong>Ваша заявка принята.</strong><br /><br />
-        Заявка передана арбитражному управляющему.<br /><br />
-        <strong>Ваш арбитражный управляющий:</strong><br />
-        Иванов Алексей Сергеевич<br />
-        Телефон: +7 (999) 123-45-67<br />
-        Email: a.ivanov@bankrotserv.ru
-      </p>
-      <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
-    </div>
-
-    <div id="chatBox" class="box hidden">
-      <div id="chatMessages" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
-      <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%;" />
-      <button onclick="sendMessage()" class="chat-button">Отправить</button>
-    </div>
   </main>
+
+  <button id="createRequestBtn" class="button" onclick="showForm()">Создать заявку</button>
+
+  <form id="formBox" class="box hidden" onsubmit="submitForm(event)" style="max-width: 600px; margin: 80px auto 60px; padding: 20px;">
+    <label>Тип процедуры банкротства:</label><br />
+    <select required>
+      <option>Физическое лицо</option>
+      <option>ИП</option>
+      <option>Юридическое лицо</option>
+    </select><br /><br />
+
+    <label>Выберите Арбитражного управляющего:</label><br />
+    <select required>
+      <option value="" disabled selected>Выберите управляющего</option>
+      <option>Иванов Алексей Сергеевич</option>
+      <option>Петрова Марина Ивановна</option>
+    </select><br /><br />
+
+    <label>Изложите кратко:</label><br />
+    <textarea rows="4" required style="width: 100%;"></textarea><br /><br />
+
+    <button type="submit" class="button" style="position: static; transform: none; margin: 0 auto; display: block;">Отправить заявку</button>
+  </form>
+
+  <div id="waitingMessage" class="box hidden" style="max-width: 600px; margin: 80px auto 60px; padding: 20px; text-align: center;">
+    <p>Ожидайте отклика Арбитражного управляющего...</p>
+  </div>
+
+  <div id="managerInfo" class="box hidden" style="max-width: 600px; margin: 80px auto 60px; padding: 20px; text-align: center;">
+    <p><strong>Ваша заявка принята.</strong><br /><br />
+      Заявка передана арбитражному управляющему.<br /><br />
+      <strong>Ваш арбитражный управляющий:</strong><br />
+      Иванов Алексей Сергеевич<br />
+      Телефон: +7 (999) 123-45-67<br />
+      Email: a.ivanov@bankrotserv.ru
+    </p>
+    <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
+  </div>
+
+  <div id="chatBox" class="box hidden" style="max-width: 600px; margin: 80px auto 60px; padding: 20px;">
+    <div id="chatMessages" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
+    <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%;" />
+    <button onclick="sendMessage()" class="chat-button">Отправить</button>
+  </div>
 
   <footer>
     &copy; 2025 Купчая КрепостЪ
@@ -162,7 +169,7 @@
   <script>
     function showForm() {
       document.getElementById('clientInfo').classList.add('hidden');
-      document.querySelector('button.button').classList.add('hidden');
+      document.getElementById('createRequestBtn').classList.add('hidden');
       document.getElementById('formBox').classList.remove('hidden');
     }
 
@@ -204,6 +211,13 @@
         chat.scrollTop = chat.scrollHeight;
       }, 2000);
     }
+
+    document.getElementById('chatInput').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
   </script>
 
 </body>
