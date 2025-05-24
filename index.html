@@ -41,12 +41,11 @@
     }
     main {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: calc(100vh - 120px);
       padding: 20px;
-      margin-top: 60px;
+      flex-direction: column;
     }
     h1 {
       font-size: 2em;
@@ -59,7 +58,7 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
-      margin: 10px 0;
+      margin-bottom: 15px;
     }
     .hidden {
       display: none;
@@ -85,6 +84,9 @@
     .chat-button {
       display: block;
       margin: 10px auto 0 auto;
+      background-color: #f5deb3; /* какао с молоком */
+      color: #3e2a14;
+      border: 1px solid #a0522d;
     }
     .message-client {
       background-color: #3e2a14;
@@ -104,6 +106,33 @@
       border-radius: 10px;
       text-align: left;
     }
+    #chatBox {
+      max-width: 600px;
+      margin: 80px auto 60px;
+      padding: 20px;
+      background: rgba(236, 207, 119, 0.85);
+      border: 2px solid #3e2a14;
+      border-radius: 8px;
+    }
+    #chatMessages {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    #chatInput {
+      width: 100%;
+      resize: vertical;
+      min-height: 60px;
+      font-size: 1em;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #a0522d;
+      font-family: Arial, sans-serif;
+      color: #3e2a14;
+      background-color: #f5deb3; /* какао с молоком */
+      box-sizing: border-box;
+    }
   </style>
 </head>
 <body>
@@ -119,33 +148,35 @@
       <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 ГК РФ и пункт 3 статьи 10 Федерального закона №152-ФЗ).</p>
       <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
     </div>
+    <button id="createRequestBtn" class="button" onclick="showForm()" style="position: static; transform: none; margin-bottom: 30px;">Создать заявку</button>
 
-    <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
+    <form id="formBox" class="box hidden" onsubmit="submitForm(event)" style="max-width: 600px; margin: 0 auto 30px; padding: 20px;">
+      <h2 style="color: #3e2a14; margin-bottom: 15px;">Форма заявки</h2>
       <label>Тип процедуры банкротства:</label><br />
-      <select required>
+      <select required style="background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 6px; width: 100%;">
         <option>Физическое лицо</option>
         <option>ИП</option>
         <option>Юридическое лицо</option>
       </select><br /><br />
 
       <label>Выберите Арбитражного управляющего:</label><br />
-      <select required>
+      <select required style="background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 6px; width: 100%;">
         <option value="" disabled selected>Выберите управляющего</option>
         <option>Иванов Алексей Сергеевич</option>
         <option>Петрова Марина Ивановна</option>
       </select><br /><br />
 
       <label>Изложите кратко:</label><br />
-      <textarea rows="4" required style="width: 100%;"></textarea><br /><br />
+      <textarea rows="4" required style="width: 100%; background-color: #f5deb3; border: 1px solid #a0522d; color: #3e2a14; border-radius: 5px; padding: 8px; resize: vertical;"></textarea><br /><br />
 
-      <button type="submit" class="chat-button">Отправить заявку</button>
+      <button type="submit" class="button" style="position: static; transform: none; margin: 0 auto; display: block;">Отправить заявку</button>
     </form>
 
-    <div id="waitingMessage" class="box hidden">
+    <div id="waitingMessage" class="box hidden" style="max-width: 600px; margin: 0 auto 30px; padding: 20px; text-align: center;">
       <p>Ожидайте отклика Арбитражного управляющего...</p>
     </div>
 
-    <div id="managerInfo" class="box hidden">
+    <div id="managerInfo" class="box hidden" style="max-width: 600px; margin: 0 auto 30px; padding: 20px; text-align: center;">
       <p><strong>Ваша заявка принята.</strong><br /><br />
         Заявка передана арбитражному управляющему.<br /><br />
         <strong>Ваш арбитражный управляющий:</strong><br />
@@ -156,14 +187,12 @@
       <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
     </div>
 
-    <div id="chatBox" class="box hidden">
-      <div id="chatMessages" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
-      <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%;" />
+    <div id="chatBox" class="hidden">
+      <div id="chatMessages"></div>
+      <textarea id="chatInput" placeholder="Введите сообщение..."></textarea>
       <button onclick="sendMessage()" class="chat-button">Отправить</button>
     </div>
   </main>
-
-  <button id="createRequestBtn" class="button" onclick="showForm()">Создать заявку</button>
 
   <footer>
     &copy; 2025 Купчая КрепостЪ
@@ -216,7 +245,7 @@
     }
 
     document.getElementById('chatInput').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
+      if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         sendMessage();
       }
