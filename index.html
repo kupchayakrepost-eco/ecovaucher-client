@@ -24,7 +24,7 @@
       width: 100%;
       text-align: center;
       padding: 10px;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.3);
       font-family: 'UnifrakturCook', serif;
       color: #ecd577;
       text-shadow: 1px 1px 2px rgba(62, 42, 20, 0.7);
@@ -43,6 +43,7 @@
       max-width: 600px;
       margin: 80px auto 60px;
       padding: 20px;
+      text-align: center;
     }
     h1 {
       font-size: 2em;
@@ -53,6 +54,34 @@
       border-radius: 8px;
       padding: 15px;
       margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+    #clientInfo {
+      text-align: center;
+    }
+    #formBox {
+      background: rgba(236, 207, 119, 0.85);
+      border: 2px solid #3e2a14;
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    #submitButton {
+      background-color: #3e2a14;
+      color: #ecd577;
+      border: 2px solid #ecd577;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      max-width: 200px;
+      margin: 10px auto 30px auto;
     }
     .hidden {
       display: none;
@@ -67,6 +96,7 @@
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
+      max-width: 200px;
     }
     .message-client {
       background-color: #3e2a14;
@@ -86,6 +116,15 @@
       border-radius: 10px;
       text-align: left;
     }
+    select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
   </style>
 </head>
 <body>
@@ -97,32 +136,36 @@
   <main>
     <div id="clientInfo" class="box">
       <p><strong>Информация для клиента</strong></p>
-      <p>Ваши паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR-коде вашего Эковаучера.</p>
-      <p>Все предоставленные вами данные защищены в соответствии с Федеральным законом РФ от 27.07.2006 № 152-ФЗ «О персональных данных», статья 19, пункт 1.</p>
-      <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
+      <p>Ваши паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR коде вашего эковаучера.</p>
+      <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 Гражданского кодекса РФ и Федеральный закон №152-ФЗ «О персональных данных»).</p>
+      <p>Убедительная просьба не передавать эковаучер третьим лицам.</p>
     </div>
 
     <button class="button" onclick="showForm()">Создать заявку</button>
 
-    <form id="formBox" class="box hidden" onsubmit="submitForm(event)">
-      <label>Тип процедуры банкротства:</label><br />
-      <select required>
-        <option>Физическое лицо</option>
-        <option>ИП</option>
-        <option>Юридическое лицо</option>
-      </select><br /><br />
+    <div id="formBox" class="hidden">
+      <h2 style="text-align: center; margin-top: 0;">Ваша заявка</h2>
+      <form id="applicationForm" onsubmit="submitForm(event)">
+        <label>Тип процедуры банкротства:</label><br />
+        <select required>
+          <option>Физическое лицо</option>
+          <option>ИП</option>
+          <option>Юридическое лицо</option>
+        </select>
 
-      <label>Ваше имя:</label><br />
-      <input type="text" required /><br /><br />
+        <label>Выберите арбитражного управляющего:</label><br />
+        <select required>
+          <option>Иванов Алексей Сергеевич</option>
+          <option>Петрова Мария Ивановна</option>
+          <option>Сидоров Николай Петрович</option>
+        </select>
 
-      <label>Email:</label><br />
-      <input type="email" required /><br /><br />
+        <label>Изложите кратко суть обращения:</label><br />
+        <textarea required rows="4"></textarea>
+      </form>
+    </div>
 
-      <label>Телефон:</label><br />
-      <input type="tel" required /><br /><br />
-
-      <button type="submit" class="button">Отправить заявку</button>
-    </form>
+    <button id="submitButton" class="hidden" type="submit" form="applicationForm">Отправить заявку</button>
 
     <div id="waitingMessage" class="box hidden">
       <p>Ожидайте отклика Арбитражного управляющего...</p>
@@ -139,9 +182,9 @@
       <button id="startChat" class="chat-button" onclick="startDiscussion()">Начать обсуждение</button>
     </div>
 
-    <div id="chatBox" class="box hidden">
+    <div id="chatBox" class="box hidden" style="text-align: left;">
       <div id="chatMessages" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
-      <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%;" />
+      <input id="chatInput" type="text" placeholder="Введите сообщение..." style="width: 80%; padding: 8px;" />
       <button onclick="sendMessage()" class="chat-button">Отправить</button>
     </div>
   </main>
@@ -153,13 +196,15 @@
   <script>
     function showForm() {
       document.getElementById('clientInfo').classList.add('hidden');
-      document.querySelector('button.button').classList.add('hidden');
+      document.querySelector('button.button').classList.add('hidden'); // скрыть кнопку "Создать заявку"
       document.getElementById('formBox').classList.remove('hidden');
+      document.getElementById('submitButton').classList.remove('hidden');
     }
 
     function submitForm(event) {
       event.preventDefault();
       document.getElementById('formBox').classList.add('hidden');
+      document.getElementById('submitButton').classList.add('hidden');
       document.getElementById('waitingMessage').classList.remove('hidden');
 
       setTimeout(() => {
@@ -182,20 +227,4 @@
 
       const clientMsg = document.createElement('div');
       clientMsg.className = 'message-client';
-      clientMsg.textContent = msg;
-      chat.appendChild(clientMsg);
-
-      input.value = '';
-
-      setTimeout(() => {
-        const reply = document.createElement('div');
-        reply.className = 'message-manager';
-        reply.textContent = 'Уточните, пожалуйста, какие у вас вопросы?';
-        chat.appendChild(reply);
-        chat.scrollTop = chat.scrollHeight;
-      }, 2000);
-    }
-  </script>
-
-</body>
-</html>
+      clientMsg.textContent
