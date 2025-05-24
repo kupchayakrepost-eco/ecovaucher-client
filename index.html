@@ -11,15 +11,14 @@
   }
   html, body {
     margin: 0; padding: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     font-family: Arial, sans-serif;
     overflow: hidden;
   }
   body {
-    /* Фон на всю область окна, строго по краям, сжимать если надо */
     background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
-    background-size: cover; /* Заполнить весь экран, сохраняя пропорции, края касаются */
+    background-size: 100% 100%; /* Строго по всем краям */
   }
   header, footer {
     width: 100%;
@@ -34,16 +33,13 @@
     z-index: 1000;
     background: transparent !important;
   }
-  header {
-    top: 0;
-  }
-  footer {
-    bottom: 0;
-  }
+  header { top: 0; }
+  footer { bottom: 0; }
+
   main {
     position: fixed;
-    top: 60px; /* высота шапки + отступ */
-    bottom: 60px; /* высота подвала + отступ */
+    top: 60px;
+    bottom: 60px;
     left: 0;
     right: 0;
     display: flex;
@@ -53,25 +49,23 @@
     overflow: hidden;
   }
   .box {
-    background: rgba(236, 213, 136, 0.85); /* песочно-желтый полупрозрачный */
-    border: 2px solid #3e2a14; /* темно-коричневая рамка */
+    background: rgba(236, 213, 136, 0.85);
+    border: 2px solid #3e2a14;
     border-radius: 8px;
     padding: 20px;
     width: 600px;
     max-width: 90vw;
     min-height: 300px;
-    box-sizing: border-box;
     color: #3e2a14;
     font-size: 16px;
     text-align: center;
   }
-  .hidden {
-    display: none;
-  }
+  .hidden { display: none; }
+
   button {
     margin-top: 15px;
-    background-color: #3e2a14; /* темно-коричневый */
-    color: #ecd577; /* песочно-желтый */
+    background-color: #3e2a14;
+    color: #ecd577;
     border: 2px solid #ecd577;
     border-radius: 5px;
     font-weight: bold;
@@ -79,7 +73,6 @@
     cursor: pointer;
     min-width: 220px;
     font-size: 16px;
-    user-select: none;
   }
   button:focus {
     outline: 2px solid #ecd577;
@@ -91,21 +84,19 @@
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #3e2a14;
-    background: rgba(245, 236, 213, 0.95); /* чуть светлее песочно-желтого */
+    background: rgba(245, 236, 213, 0.95);
     color: #3e2a14;
     box-sizing: border-box;
     resize: vertical;
   }
-  textarea {
-    min-height: 80px;
-  }
+  textarea { min-height: 80px; }
+
   #chatMessages {
     max-height: 220px;
     overflow-y: auto;
-    margin-bottom: 10px;
     text-align: left;
+    margin-bottom: 10px;
   }
-  /* Стили скроллбара в чате, цвет совпадает с полем ввода */
   #chatMessages::-webkit-scrollbar {
     width: 8px;
   }
@@ -135,7 +126,17 @@
     max-width: 80%;
     text-align: left;
   }
-  /* Кнопка отправить в чате */
+  #chatInput {
+    width: 70%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #3e2a14;
+    background: rgba(245, 236, 213, 0.95);
+    color: #3e2a14;
+    min-height: 60px;
+    box-sizing: border-box;
+  }
   #chatSendBtn {
     background-color: #3e2a14;
     color: #ecd577;
@@ -147,20 +148,6 @@
     font-size: 16px;
     margin-left: 10px;
   }
-  /* Инпут чата */
-  #chatInput {
-    width: 70%;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #3e2a14;
-    background: rgba(245, 236, 213, 0.95);
-    color: #3e2a14;
-    resize: vertical;
-    min-height: 60px;
-    box-sizing: border-box;
-  }
-  /* Контейнер для формы чата */
   #chatBoxContent {
     display: flex;
     align-items: flex-start;
@@ -169,63 +156,56 @@
 </style>
 </head>
 <body>
-
 <header>
   <h1>Ваш Эковаучер с запросом на услугу банкротство</h1>
 </header>
 
 <main>
-  <!-- Информационный блок -->
   <div id="clientInfo" class="box">
     <p><strong>Информация для клиента</strong></p>
-    <p>Ваши паспортные данные, контакты для обратной связи и электронная подпись зашифрованы в QR коде вашего Эковаучера.</p>
-    <p>Все предоставленные вами данные защищены в согласии с законодательством РФ (статья 152 ГК РФ и пункт 3 статьи 10 Федерального закона №152-ФЗ).</p>
-    <p>Убедительная просьба не передавать Эковаучер третьим лицам.</p>
+    <p>Ваши паспортные данные, контакты и электронная подпись зашифрованы в QR коде.</p>
+    <p>Данные защищены (ст. 152 ГК РФ, п.3 ст.10 ФЗ №152-ФЗ).</p>
+    <p>Не передавайте Эковаучер третьим лицам.</p>
   </div>
-  <button id="createRequestBtn" type="button">Создать заявку</button>
+  <button id="createRequestBtn">Создать заявку</button>
 
-  <!-- Форма заявки -->
-  <form id="formBox" class="box hidden" onsubmit="submitForm(event)" novalidate>
-    <h2 style="margin-top:0; color:#3e2a14;">Форма заявки</h2>
-    <label for="procedureType">Тип процедуры банкротства:</label><br />
+  <form id="formBox" class="box hidden" onsubmit="return false;" novalidate>
+    <h2 style="margin-top:0;">Форма заявки</h2>
+    <label for="procedureType">Тип процедуры:</label><br />
     <select id="procedureType" required>
-      <option value="">Выберите тип процедуры</option>
+      <option value="">Выберите тип</option>
       <option value="Физическое лицо">Физическое лицо</option>
       <option value="ИП">ИП</option>
       <option value="Юридическое лицо">Юридическое лицо</option>
     </select><br /><br />
 
-    <label for="managerSelect">Выберите Арбитражного управляющего:</label><br />
+    <label for="managerSelect">Управляющий:</label><br />
     <select id="managerSelect" required>
-      <option value="" disabled selected>Выберите управляющего</option>
+      <option value="" disabled selected>Выберите</option>
       <option value="Иванов Алексей Сергеевич">Иванов Алексей Сергеевич</option>
       <option value="Петрова Марина Ивановна">Петрова Марина Ивановна</option>
     </select><br /><br />
 
-    <label for="description">Изложите кратко:</label><br />
-    <textarea id="description" rows="4" required></textarea><br />
+    <label for="description">Описание:</label><br />
+    <textarea id="description" required></textarea><br />
   </form>
   <button id="submitRequestBtn" class="hidden" type="button" disabled>Отправить заявку</button>
 
-  <!-- Ожидание -->
-  <div id="waitingMessage" class="box hidden" style="text-align:center; line-height:1.4;">
-    <p>Ожидайте отклика Арбитражного управляющего...</p>
+  <div id="waitingMessage" class="box hidden">
+    <p>Ожидайте отклика арбитражного управляющего...</p>
   </div>
 
-  <!-- Информация об управляющем -->
-  <div id="managerInfo" class="box hidden" style="text-align:center;">
+  <div id="managerInfo" class="box hidden">
     <p><strong>Ваша заявка принята.</strong><br /><br />
-      Заявка передана арбитражному управляющему.<br /><br />
-      <strong>Ваш арбитражный управляющий:</strong><br />
-      Иванов Алексей Сергеевич<br />
-      Телефон: +7 (999) 123-45-67<br />
+      Передана управляющему:<br /><br />
+      <strong>Иванов Алексей Сергеевич</strong><br />
+      Тел: +7 (999) 123-45-67<br />
       Email: a.ivanov@bankrotserv.ru
     </p>
   </div>
   <button id="startChatBtn" class="hidden" type="button">Начать обсуждение</button>
 
-  <!-- Чат -->
-  <div id="chatBox" class="box hidden" style="text-align:left;">
+  <div id="chatBox" class="box hidden">
     <div id="chatMessages"></div>
     <div id="chatBoxContent">
       <textarea id="chatInput" placeholder="Введите сообщение..." rows="3"></textarea>
@@ -250,9 +230,72 @@
   const chatMessages = document.getElementById('chatMessages');
   const chatInput = document.getElementById('chatInput');
   const chatSendBtn = document.getElementById('chatSendBtn');
-
   const procedureType = document.getElementById('procedureType');
   const managerSelect = document.getElementById('managerSelect');
   const description = document.getElementById('description');
 
-  // Активность кнопки "Отправ
+  // Активация кнопки отправки заявки
+  formBox.addEventListener('input', () => {
+    submitRequestBtn.disabled = !(procedureType.value && managerSelect.value && description.value.trim());
+  });
+
+  createRequestBtn.addEventListener('click', () => {
+    createRequestBtn.classList.add('hidden');
+    clientInfo.classList.add('hidden');
+    formBox.classList.remove('hidden');
+    submitRequestBtn.classList.remove('hidden');
+  });
+
+  submitRequestBtn.addEventListener('click', handleFormSubmit);
+  formBox.addEventListener('keypress', e => {
+    if (e.key === 'Enter') e.preventDefault();
+  });
+
+  function handleFormSubmit() {
+    formBox.classList.add('hidden');
+    submitRequestBtn.classList.add('hidden');
+    waitingMessage.classList.remove('hidden');
+
+    setTimeout(() => {
+      waitingMessage.classList.add('hidden');
+      managerInfo.classList.remove('hidden');
+      startChatBtn.classList.remove('hidden');
+    }, 3000);
+  }
+
+  startChatBtn.addEventListener('click', () => {
+    startChatBtn.classList.add('hidden');
+    managerInfo.classList.add('hidden');
+    chatBox.classList.remove('hidden');
+  });
+
+  chatSendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+
+    const clientMsg = document.createElement('div');
+    clientMsg.className = 'message-client';
+    clientMsg.textContent = msg;
+    chatMessages.appendChild(clientMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    chatInput.value = '';
+
+    setTimeout(() => {
+      const reply = document.createElement('div');
+      reply.className = 'message-manager';
+      reply.textContent = 'Спасибо, мы свяжемся с вами в ближайшее время.';
+      chatMessages.appendChild(reply);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1000);
+  }
+</script>
+</body>
+</html>
