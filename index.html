@@ -15,8 +15,11 @@
     width: 100vw;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center;
-    background-size: cover;
+  }
+  body {
+    /* Фон на всю область окна, строго по краям, сжимать если надо */
+    background: url('https://i.postimg.cc/159K1Sxt/Whats-App-2025-05-21-12-19-35-38e16ea7.jpg') no-repeat center center fixed;
+    background-size: cover; /* Заполнить весь экран, сохраняя пропорции, края касаются */
   }
   header, footer {
     width: 100%;
@@ -76,6 +79,7 @@
     cursor: pointer;
     min-width: 220px;
     font-size: 16px;
+    user-select: none;
   }
   button:focus {
     outline: 2px solid #ecd577;
@@ -201,7 +205,7 @@
     <label for="description">Изложите кратко:</label><br />
     <textarea id="description" rows="4" required></textarea><br />
   </form>
-  <button id="submitRequestBtn" class="hidden" type="button">Отправить заявку</button>
+  <button id="submitRequestBtn" class="hidden" type="button" disabled>Отправить заявку</button>
 
   <!-- Ожидание -->
   <div id="waitingMessage" class="box hidden" style="text-align:center; line-height:1.4;">
@@ -243,4 +247,12 @@
   const managerInfo = document.getElementById('managerInfo');
   const startChatBtn = document.getElementById('startChatBtn');
   const chatBox = document.getElementById('chatBox');
-  const chatMessages = document.getElement
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const chatSendBtn = document.getElementById('chatSendBtn');
+
+  const procedureType = document.getElementById('procedureType');
+  const managerSelect = document.getElementById('managerSelect');
+  const description = document.getElementById('description');
+
+  // Активность кнопки "Отправ
